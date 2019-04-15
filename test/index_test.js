@@ -9,8 +9,6 @@ const PATH_OFX_WINDOWS1252_NORMAL = __dirname + '/__arquivos_ofx__/BB 102013_emp
 describe('alt-conciliacao-bancaria', () => {
     describe('parseOfx', () => {
         it('deve1', () => {
-            console.log(parseOfx)
-
             return parseOfx(fs.readFileSync(PATH_OFX_UTF8_NORMAL), {}, undefined)
         })
     })
