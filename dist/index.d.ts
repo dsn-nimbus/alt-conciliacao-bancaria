@@ -1,18 +1,19 @@
 declare function parseOfx(arquivoOfx: File, conta?: any, encode?: string): Promise<Ofx>;
+declare function ofxToJSON(arquivoOfx: File, encode?: string): Promise<any>;
 declare class Ofx {
     dadosBanco: any;
     ofxLancamentos: OfxLancamento[];
     dataInicial: Date;
     dataFinal: Date;
     conta: any;
-    arquivoCompletoJSON: any;
     constructor(arquivoOfxString: string, conta: any, objOfx?: Partial<Ofx>);
+    static fromFileToJSON(arquivoOfxString: string): any;
     temConta(): boolean;
     temLancamentos(): boolean;
     private _preencheLancamentosComContaPassada;
-    private _fileToOfx;
+    private _parseXML2JSON;
+    private _preencheModeloComBaseNoArquivo;
     private _parseData;
-    private _normalizarArquivo;
 }
 declare class OfxLancamento {
     fitid: string;
@@ -36,5 +37,6 @@ declare class OfxLancamento {
 }
 declare const _default: {
     parseOfx: typeof parseOfx;
+    ofxToJSON: typeof ofxToJSON;
 };
 export default _default;
