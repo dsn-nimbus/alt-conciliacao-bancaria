@@ -3,7 +3,7 @@ import xmlParser from 'pixl-xml'
 const CODIGO_CHAR_ANSI = 65533
 const ENCODE_WINDOW_1252 = 'windows-1252'
 
-function parseOfx(arquivoOfx:File, conta?:any, encode?:string):Promise<Ofx> {
+export function parseOfx(arquivoOfx:File, conta?:any, encode?:string):Promise<Ofx> {
     return new Promise((resolve, reject) => {
         if (!arquivoOfx) {
             return reject('Arquivo não informado.')
@@ -37,7 +37,7 @@ function parseOfx(arquivoOfx:File, conta?:any, encode?:string):Promise<Ofx> {
     })
 }
 
-function ofxToJSON(arquivoOfx:File, encode?:string):Promise<any> {
+export function ofxToJSON(arquivoOfx:File, encode?:string):Promise<any> {
     return new Promise((resolve, reject) => {
         if (!arquivoOfx) {
             return reject('Arquivo não informado.')
@@ -241,9 +241,4 @@ class OfxLancamento {
         this.refnum = this.refnum || this.checknum
         this.checknum = this.checknum || this.refnum
     }
-}
-
-export default {
-    parseOfx,
-    ofxToJSON,
 }
