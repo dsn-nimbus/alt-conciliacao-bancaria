@@ -9,7 +9,7 @@ function parseOfx(arquivoOfx:File, conta?:any, encode?:string):Promise<Ofx> {
             return reject('Arquivo não informado.')
         }
 
-        var fileReader = new FileReader()
+        const fileReader = new FileReader()
         fileReader.onload = function(event:Event) {
             let target:any = event.target // TS hack
 
@@ -43,7 +43,7 @@ function ofxToJSON(arquivoOfx:File, encode?:string):Promise<any> {
             return reject('Arquivo não informado.')
         }
 
-        var fileReader = new FileReader()
+        const fileReader = new FileReader()
         fileReader.onload = function(event:Event) {
             let target:any = event.target // TS hack
 
@@ -80,9 +80,9 @@ function ofxstr2Json(ofxStr:string):any {
 }
 
 function normalizaOfxString(ofxStr:string):string {
-    var data:{[key:string]:any} = {}
-    var ofxRes = ofxStr.split('<OFX>', 2)
-    var ofx = '<OFX>' + ofxRes[1]
+    let data:{[key:string]:any} = {}
+    const ofxRes = ofxStr.split('<OFX>', 2)
+    const ofx = '<OFX>' + ofxRes[1]
 
     data.headerString = ofxRes[0].split(/\r|\n/)
     data.xml = ofx
@@ -158,16 +158,16 @@ class Ofx {
                 throw new Error("Arquivo inválido.")
             }
 
-            var dataIni = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.dtstart
-            var dataFim = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.dtend
-            var lancamentos = []
+            let dataIni = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.dtstart
+            let dataFim = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.dtend
+            let lancamentos = []
 
             this._parseData('dataInicial', dataIni)
             this._parseData('dataFinal', dataFim)
 
             if (Array.isArray(arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn)) {
                 arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.forEach((ln:any) => {
-                    var ofxLancamento = new OfxLancamento(ln)
+                    const ofxLancamento = new OfxLancamento(ln)
                     ofxLancamento.bankid = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.bankacctfrom.bankid
                     lancamentos.push(ofxLancamento)
                 })
@@ -185,7 +185,7 @@ class Ofx {
     }
 
     private _parseData(campo:keyof Ofx, texto:string):void {
-        var data = new Date(texto.substr(0, 4) + "-" + texto.substr(4, 2) + "-" + texto.substr(6, 2))
+        const data = new Date(texto.substr(0, 4) + "-" + texto.substr(4, 2) + "-" + texto.substr(6, 2))
         this[campo] = new Date(data.getTime() + (data.getTimezoneOffset() * 60 * 1000))
     } 
 }
@@ -221,7 +221,7 @@ class OfxLancamento {
     }
 
     _parseData(texto:string):void {
-        let data = new Date(texto.substr(0, 4) + "-" + texto.substr(4, 2) + "-" + texto.substr(6, 2))
+        const data = new Date(texto.substr(0, 4) + "-" + texto.substr(4, 2) + "-" + texto.substr(6, 2))
         this.data = new Date(data.getTime() + (data.getTimezoneOffset() * 60 * 1000))
     }
 
