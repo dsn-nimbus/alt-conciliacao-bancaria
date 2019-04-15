@@ -51,6 +51,6 @@ export function hashKeysToArray(hash: any): any;
 export function isaArray(arg: any): any;
 export function isaHash(arg: any): any;
 export function numKeys(hash: any): any;
-export function parse(text: any, opts: any): any;
+export function parse(text: any, opts?: any): any;
 export function stringify(node: any, name: any, indent: any, indent_string: any, eol: any, sort: any): any;
 export function trim(text: any): any;
