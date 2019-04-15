@@ -1,0 +1,56 @@
+export class Parser {
+    constructor(args: any, opts: any);
+    text: any;
+    tree: any;
+    errors: any;
+    piNodeList: any;
+    dtdNodeList: any;
+    documentNodeName: any;
+    attribsKey: any;
+    dataKey: any;
+    compose(indent_string: any, eol: any): any;
+    error(): any;
+    getError(error: any): any;
+    getLastError(): any;
+    getTree(): any;
+    parse(branch: any, name: any): void;
+    parseCDATANode(tag: any): any;
+    parseCommentNode(tag: any): any;
+    parseDTDNode(tag: any): any;
+    parsePINode(tag: any): any;
+    throwParseError(key: any, tag: any): void;
+}
+export class XML {
+    constructor(args: any, opts: any);
+    text: any;
+    tree: any;
+    errors: any;
+    piNodeList: any;
+    dtdNodeList: any;
+    documentNodeName: any;
+    attribsKey: any;
+    dataKey: any;
+    compose(indent_string: any, eol: any): any;
+    error(): any;
+    getError(error: any): any;
+    getLastError(): any;
+    getTree(): any;
+    parse(branch: any, name: any): void;
+    parseCDATANode(tag: any): any;
+    parseCommentNode(tag: any): any;
+    parseDTDNode(tag: any): any;
+    parsePINode(tag: any): any;
+    throwParseError(key: any, tag: any): void;
+}
+export function alwaysArray(obj: any, key: any): any;
+export function decodeEntities(text: any): any;
+export function encodeAttribEntities(text: any): any;
+export function encodeEntities(text: any): any;
+export function firstKey(hash: any): any;
+export function hashKeysToArray(hash: any): any;
+export function isaArray(arg: any): any;
+export function isaHash(arg: any): any;
+export function numKeys(hash: any): any;
+export function parse(text: any, opts: any): any;
+export function stringify(node: any, name: any, indent: any, indent_string: any, eol: any, sort: any): any;
+export function trim(text: any): any;

@@ -1,0 +1,28 @@
+{
+  "name": "alt-conciliacao-bancaria",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && uglifyjs dist/index.js --compress --output dist/index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsn-nimbus/alt-conciliacao-bancaria.git"
+  },
+  "author": "Eric M. Dantas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dsn-nimbus/alt-conciliacao-bancaria/issues"
+  },
+  "homepage": "https://github.com/dsn-nimbus/alt-conciliacao-bancaria#readme",
+  "dependencies": {
+    "pixl-xml": "^1.0.13",
+    "typescript": "^3.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.4",
+    "uglify-js": "^3.5.4"
+  }
+}
