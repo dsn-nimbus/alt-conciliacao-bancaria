@@ -122,7 +122,7 @@ class Ofx {
         }
 
         if (typeof arquivoOfxString === "string") {
-            const arquivoCompletoJSON = this._parseXML2jSON(arquivoOfxString)
+            let arquivoCompletoJSON = this._parseXML2jSON(arquivoOfxString)
             this._preencheModeloComBaseNoArquivo(arquivoCompletoJSON)
         }
 
@@ -166,7 +166,7 @@ class Ofx {
 
             if (Array.isArray(arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn)) {
                 arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.forEach((ln:any) => {
-                    const ofxLancamento = new OfxLancamento(ln)
+                    let ofxLancamento = new OfxLancamento(ln)
                     ofxLancamento.bankid = arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.bankacctfrom.bankid
                     lancamentos.push(ofxLancamento)
                 })
