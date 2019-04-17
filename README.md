@@ -10,7 +10,7 @@ $ npm i --save alt-conciliacao-bancaria
 
 #### Uso simples
 
-```js
+```ts
 import {parseOfx} from 'alt-conciliacao-bancaria'
 
 parseOfx(this.files[0], new FileReader())
@@ -27,7 +27,7 @@ parseOfx(this.files[0], new FileReader())
 
 #### Uso com opções
 
-```js
+```ts
 import {parseOfx} from 'alt-conciliacao-bancaria'
 
 const opcoesParse = {
@@ -51,7 +51,7 @@ parseOfx(this.files[0], new FileReader(), opcoesParse)
 
 #### Uso simples
 
-```js
+```ts
 import {ofxToJSON} from 'alt-conciliacao-bancaria'
 
 ofxToJSON(this.files[0], new FileReader())
@@ -68,7 +68,7 @@ ofxToJSON(this.files[0], new FileReader())
 
 #### Uso com opções
 
-```js
+```ts
 import {ofxToJSON} from 'alt-conciliacao-bancaria'
 
 const opcoes = {
