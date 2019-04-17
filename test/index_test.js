@@ -21,6 +21,7 @@ describe('alt-conciliacao-bancaria', () => {
                     expect(ofx.ofxLancamentos.length).toBe(97)
                     expect(ofx.dataInicial).toBeInstanceOf(Date)
                     expect(ofx.dataFinal).toBeInstanceOf(Date)
+                    expect(ofx.conta).toBeUndefined()
                 } catch (e) {
                     throw e
                 }
@@ -40,6 +41,7 @@ describe('alt-conciliacao-bancaria', () => {
                     expect(ofx.ofxLancamentos.length).toBe(1)
                     expect(ofx.dataInicial).toBeInstanceOf(Date)
                     expect(ofx.dataFinal).toBeInstanceOf(Date)
+                    expect(ofx.conta).toBeUndefined()
                 } catch (e) {
                     throw e
                 }
@@ -59,6 +61,7 @@ describe('alt-conciliacao-bancaria', () => {
                     expect(ofx.ofxLancamentos.length).toBe(97)
                     expect(ofx.dataInicial).toBeInstanceOf(Date)
                     expect(ofx.dataFinal).toBeInstanceOf(Date)
+                    expect(ofx.conta).toBeUndefined()
                 } catch (e) {
                     throw e
                 }
