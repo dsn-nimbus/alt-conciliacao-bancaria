@@ -8,7 +8,7 @@ const PATH_OFX_UTF8_PEQUENO = __dirname + '/__arquivos_ofx__/utf8-pequeno.ofx'
 
 describe('alt-conciliacao-bancaria', () => {
     describe('parseOfx', () => {
-        describe('utf8-base', () => {
+        describe('utf8-base.ofx', () => {
             it('deve rejeitar o parse, arquivo não informado', async () => {
                 const arquivo = undefined
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_BASE)
@@ -69,7 +69,7 @@ describe('alt-conciliacao-bancaria', () => {
             })
         })        
 
-        describe('utf8-pequeno', () => {
+        describe('utf8-pequeno.ofx', () => {
             it('deve rejeitar o parse, arquivo não informado', async () => {
                 const arquivo = undefined
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_DIFERENTES_VALORES)
@@ -130,7 +130,7 @@ describe('alt-conciliacao-bancaria', () => {
             })
         })        
 
-        describe('utf8-diferentes-valores', () => {
+        describe('utf8-diferentes-valores.ofx', () => {
             it('deve rejeitar o parse, arquivo não informado', async () => {
                 const arquivo = undefined
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_DIFERENTES_VALORES)
@@ -193,7 +193,7 @@ describe('alt-conciliacao-bancaria', () => {
     })
 
     describe('ofxToJSON', () => {
-        describe('utf8-base', () => {
+        describe('utf8-base.ofx', () => {
            it('deve rejeitar o parse, arquivo não informado', async () => {
                 const arquivo = undefined
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_BASE)
@@ -227,7 +227,7 @@ describe('alt-conciliacao-bancaria', () => {
             })
         })
 
-        describe('utf8-pequeno', () => {
+        describe('utf8-pequeno.ofx', () => {
             it('deve rejeitar o parse, arquivo não informado', async () => {
                 const arquivo = undefined
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_PEQUENO)
@@ -261,7 +261,7 @@ describe('alt-conciliacao-bancaria', () => {
             })
         })
 
-        describe('utf8-diferentes-valores', () => {
+        describe('utf8-diferentes-valores.ofx', () => {
             it('deve rejeitar o parse, arquivo não informado', async () => {
                 const arquivo = undefined
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_DIFERENTES_VALORES)
