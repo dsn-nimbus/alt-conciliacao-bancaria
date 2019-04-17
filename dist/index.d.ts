@@ -10,8 +10,8 @@ interface OfxOpcoesParse {
 interface OfxOpcoesToJSON {
     encode?: encodeType;
 }
-declare function parseOfxFn(arquivoOfx: File, reader: OfxFileReader, opcoes?: OfxOpcoesParse): Promise<Ofx>;
-declare function ofxToJSONFn(arquivoOfx: File, reader: OfxFileReader, opcoes?: OfxOpcoesToJSON): Promise<any>;
+export declare function parseOfx(arquivoOfx: File, reader: OfxFileReader, opcoes?: OfxOpcoesParse): Promise<Ofx>;
+export declare function ofxToJSON(arquivoOfx: File, reader: OfxFileReader, opcoes?: OfxOpcoesToJSON): Promise<any>;
 declare class Ofx {
     dadosBanco: any;
     ofxLancamentos: OfxLancamento[];
@@ -47,6 +47,4 @@ declare class OfxLancamento {
     _normalizaNomeLancamento(): void;
     _normalizaRefChecknum(): void;
 }
-export declare const parseOfx: typeof parseOfxFn;
-export declare const ofxToJSON: typeof ofxToJSONFn;
 export {};
