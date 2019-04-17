@@ -3,77 +3,105 @@ import xmlParser from 'pixl-xml'
 const CODIGO_CHAR_ANSI = 65533
 const ENCODE_WINDOW_1252 = 'windows-1252'
 
-export function parseOfx(arquivoOfx:File, conta?:any, encode?:string):Promise<Ofx> {
+type encodeType = undefined|string
+
+interface OfxFileReader {
+    onload(evento:Event):void
+    readAsText(arquivo:File, encode:encodeType):void
+}
+
+interface OpcoesParseOfx {
+    conta?:any
+    encode?:encodeType
+}
+
+interface OpcoesOfxToJSON {
+    encode?:encodeType
+}
+
+export function parseOfx(arquivoOfx:File, reader:OfxFileReader, opcoes?:OpcoesParseOfx):Promise<Ofx> {
     return new Promise((resolve, reject) => {
         if (!arquivoOfx) {
             return reject('Arquivo não informado.')
         }
 
-        const fileReader = new FileReader()
-        fileReader.onload = function(event:Event) {
+        if (!opcoes) {
+            opcoes = {}
+        }
+
+        reader.onload = function(event:Event) {
             let target:any = event.target // TS hack
 
             // Charsets suportados: UTF-8 e ANSI
-            if (encode === undefined) {
+            if (opcoes!.encode === undefined) {
                 for (var i in target.result) {
                     // Caso o código seja este, 
                     // faz o parse do arquivo de forma diferente:
                     // utilizando windows-1252
                     if (target.result.charCodeAt(i) == CODIGO_CHAR_ANSI) {
-                        parseOfx(arquivoOfx, conta, ENCODE_WINDOW_1252)
+                        parseOfx(arquivoOfx, reader, Object.assign(opcoes, {encode: ENCODE_WINDOW_1252}))
                     }
                 }
             }
             
             try {
-                return resolve(new Ofx(target.result, conta))
+                return resolve(target.result)
             } catch (e) {
                 return reject(e)
             }
         }
 
-        fileReader.readAsText(arquivoOfx, encode)
-        encode = undefined
+        reader.readAsText(arquivoOfx, opcoes!.encode)
+        opcoes.encode = undefined
+    })
+    .then((ofxString) => {
+        return new Ofx((ofxString as string), opcoes!.conta)
     })
 }
 
-export function ofxToJSON(arquivoOfx:File, encode?:string):Promise<any> {
+export function ofxToJSON(arquivoOfx:File, reader:OfxFileReader, opcoes?:OpcoesOfxToJSON):Promise<any> {
     return new Promise((resolve, reject) => {
         if (!arquivoOfx) {
             return reject('Arquivo não informado.')
         }
 
-        const fileReader = new FileReader()
-        fileReader.onload = function(event:Event) {
+        if (!opcoes) {
+            opcoes = {}
+        }
+
+        reader.onload = function(event:Event) {
             let target:any = event.target // TS hack
 
             // Charsets suportados: UTF-8 e ANSI
-            if (encode === undefined) {
+            if (opcoes!.encode === undefined) {
                 for (var i in target.result) {
                     // Caso o código seja este, 
                     // faz o parse do arquivo de forma diferente:
                     // utilizando windows-1252
                     if (target.result.charCodeAt(i) == CODIGO_CHAR_ANSI) {
-                        ofxToJSON(arquivoOfx, ENCODE_WINDOW_1252)
+                        ofxToJSON(arquivoOfx, reader, Object.assign(opcoes, {encode: ENCODE_WINDOW_1252}))
                     }
                 }
             }
 
             try {
-                return resolve(Ofx.fromFileToJSON(target.result))
+                return resolve(target.result)
             } catch(e) {
                 return reject(e)
             }
         }
 
-        fileReader.readAsText(arquivoOfx, encode)
-        encode = undefined
+        reader.readAsText(arquivoOfx, opcoes!.encode)
+        opcoes.encode = undefined
+    })
+    .then((ofxString) => {
+        return Ofx.fromFileToJSON((ofxString as string))
     })
 }
 
 function ofxstr2Json(ofxStr:string):any {
     if (!ofxStr || ofxStr.length === 0) {
-        throw new Error("O arquivo não possui uma estrutura OFX válida")
+        throw new Error("Arquivo vazio.")
     }
 
     return xmlParser.parse(normalizaOfxString(ofxStr))
@@ -180,7 +208,7 @@ class Ofx {
             this.ofxLancamentos = lancamentos
             this.dadosBanco = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.bankacctfrom
         } catch (e) {
-            throw new Error("O arquivo não possui uma estrutura OFX válida")
+            throw new Error("O arquivo não possui uma estrutura OFX válida. Mensagem original: " + e.message)
         }
     }
 
