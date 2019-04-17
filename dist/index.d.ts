@@ -1,5 +1,17 @@
-declare function parseOfx(arquivoOfx: File, conta?: any, encode?: string): Promise<Ofx>;
-declare function ofxToJSON(arquivoOfx: File, encode?: string): Promise<any>;
+declare type encodeType = undefined | string;
+interface OfxFileReader {
+    onload(evento: Event): void;
+    readAsText(arquivo: File, encode: encodeType): void;
+}
+interface OfxOpcoesParse {
+    conta?: any;
+    encode?: encodeType;
+}
+interface OfxOpcoesToJSON {
+    encode?: encodeType;
+}
+declare function parseOfxFn(arquivoOfx: File, reader: OfxFileReader, opcoes?: OfxOpcoesParse): Promise<Ofx>;
+declare function ofxToJSONFn(arquivoOfx: File, reader: OfxFileReader, opcoes?: OfxOpcoesToJSON): Promise<any>;
 declare class Ofx {
     dadosBanco: any;
     ofxLancamentos: OfxLancamento[];
@@ -35,8 +47,6 @@ declare class OfxLancamento {
     _normalizaNomeLancamento(): void;
     _normalizaRefChecknum(): void;
 }
-declare const _default: {
-    parseOfx: typeof parseOfx;
-    ofxToJSON: typeof ofxToJSON;
-};
-export default _default;
+export declare const parseOfx: typeof parseOfxFn;
+export declare const ofxToJSON: typeof ofxToJSONFn;
+export {};

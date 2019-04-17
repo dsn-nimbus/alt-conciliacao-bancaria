@@ -9,6 +9,18 @@ const PATH_OFX_UTF8_PEQUENO = __dirname + '/__arquivos_ofx__/utf8-pequeno.ofx'
 describe('alt-conciliacao-bancaria', () => {
     describe('parseOfx', () => {
         describe('utf8-base', () => {
+            it('deve rejeitar o parse, arquivo não informado', async () => {
+                const arquivo = undefined
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_BASE)
+
+                try {
+                    await parseOfx(arquivo, fileReader)
+                    expect(false).toBe(true)
+                } catch(e) {
+                    expect(e.message).toEqual('Arquivo não informado.')
+                }
+            })
+
             it('deve resolver o conteúdo do arquivo retornando uma instância de Ofx - sem opções', async () => {
                 const arquivo = {}
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_BASE)
@@ -29,6 +41,18 @@ describe('alt-conciliacao-bancaria', () => {
         })        
 
         describe('utf8-pequeno', () => {
+            it('deve rejeitar o parse, arquivo não informado', async () => {
+                const arquivo = undefined
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_DIFERENTES_VALORES)
+
+                try {
+                    await parseOfx(arquivo, fileReader)
+                    expect(false).toBe(true)
+                } catch(e) {
+                    expect(e.message).toEqual('Arquivo não informado.')
+                }
+            })
+
             it('deve resolver o conteúdo do arquivo retornando uma instância de Ofx - sem opções', async () => {
                 const arquivo = {}
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_PEQUENO)
@@ -49,6 +73,18 @@ describe('alt-conciliacao-bancaria', () => {
         })        
 
         describe('utf8-diferentes-valores', () => {
+            it('deve rejeitar o parse, arquivo não informado', async () => {
+                const arquivo = undefined
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_DIFERENTES_VALORES)
+
+                try {
+                    await parseOfx(arquivo, fileReader)
+                    expect(false).toBe(true)
+                } catch(e) {
+                    expect(e.message).toEqual('Arquivo não informado.')
+                }
+            })
+
             it('deve resolver o conteúdo do arquivo retornando uma instância de Ofx - sem opções', async () => {
                 const arquivo = {}
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_DIFERENTES_VALORES)
@@ -71,6 +107,18 @@ describe('alt-conciliacao-bancaria', () => {
 
     describe('ofxToJSON', () => {
         describe('utf8-base', () => {
+           it('deve rejeitar o parse, arquivo não informado', async () => {
+                const arquivo = undefined
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_BASE)
+
+                try {
+                    await ofxToJSON(arquivo, fileReader)
+                    expect(false).toBe(true)
+                } catch(e) {
+                    expect(e.message).toEqual('Arquivo não informado.')
+                }
+            }) 
+
             it('deve resolver o conteúdo do arquivo retornando um OfxJSON - sem opções', async () => {
                 const arquivo = {}
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_BASE)
@@ -84,6 +132,7 @@ describe('alt-conciliacao-bancaria', () => {
                     expect(ofxJSON.bankmsgsrsv1).toBeDefined()
                     expect(typeof ofxJSON.bankmsgsrsv1).toBe('object')
                     expect(ofxJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn).toBeDefined()
+                    expect(typeof ofxJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn).toBe('object')
                     expect(ofxJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.length).toBe(97)
                 } catch (e) {
                     throw e
@@ -92,6 +141,18 @@ describe('alt-conciliacao-bancaria', () => {
         })
 
         describe('utf8-pequeno', () => {
+            it('deve rejeitar o parse, arquivo não informado', async () => {
+                const arquivo = undefined
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_PEQUENO)
+
+                try {
+                    await ofxToJSON(arquivo, fileReader)
+                    expect(false).toBe(true)
+                } catch(e) {
+                    expect(e.message).toEqual('Arquivo não informado.')
+                }
+            })
+
             it('deve resolver o conteúdo do arquivo retornando um OfxJSON - sem opções', async () => {
                 const arquivo = {}
                 const fileReader = criaOfxFileReader(PATH_OFX_UTF8_PEQUENO)
@@ -114,9 +175,21 @@ describe('alt-conciliacao-bancaria', () => {
         })
 
         describe('utf8-diferentes-valores', () => {
+            it('deve rejeitar o parse, arquivo não informado', async () => {
+                const arquivo = undefined
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_DIFERENTES_VALORES)
+
+                try {
+                    await parseOfx(arquivo, fileReader)
+                    expect(false).toBe(true)
+                } catch(e) {
+                    expect(e.message).toEqual('Arquivo não informado.')
+                }
+            }) 
+
             it('deve resolver o conteúdo do arquivo retornando um OfxJSON - sem opções', async () => {
                 const arquivo = {}
-                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_BASE)
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_DIFERENTES_VALORES)
 
                 try {
                     const ofxJSON = await ofxToJSON(arquivo, fileReader)
@@ -127,6 +200,7 @@ describe('alt-conciliacao-bancaria', () => {
                     expect(ofxJSON.bankmsgsrsv1).toBeDefined()
                     expect(typeof ofxJSON.bankmsgsrsv1).toBe('object')
                     expect(ofxJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn).toBeDefined()
+                    expect(typeof ofxJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn).toBe('object')
                     expect(ofxJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.length).toBe(97)
                 } catch (e) {
                     throw e
