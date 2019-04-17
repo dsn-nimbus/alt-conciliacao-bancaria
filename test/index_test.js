@@ -34,6 +34,35 @@ describe('alt-conciliacao-bancaria', () => {
                     expect(ofx.dataInicial).toBeInstanceOf(Date)
                     expect(ofx.dataFinal).toBeInstanceOf(Date)
                     expect(ofx.conta).toBeUndefined()
+                    expect(ofx.temConta()).toBe(false)
+                    expect(ofx.temLancamentos()).toBe(true)                    
+                    for (const lanc of ofx.ofxLancamentos) {
+                        expect(lanc.temConta()).toBe(false)
+                    }
+                } catch (e) {
+                    throw e
+                }
+            })
+
+            it('deve resolver o conteúdo do arquivo retornando uma instância de Ofx - com opções', async () => {
+                const arquivo = {}
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_BASE)
+                const opcoes = {conta: {id: 1, nome: 'conta1'}}
+
+                try {
+                    const ofx = await parseOfx(arquivo, fileReader, opcoes)
+                    expect(ofx).toBeDefined()
+                    expect(typeof ofx).toBe('object')
+                    expect(ofx.dadosBanco).toBeDefined()
+                    expect(ofx.ofxLancamentos.length).toBe(97)
+                    expect(ofx.dataInicial).toBeInstanceOf(Date)
+                    expect(ofx.dataFinal).toBeInstanceOf(Date)
+                    expect(ofx.conta).toBeDefined()
+                    expect(ofx.temConta()).toBe(true)
+                    expect(ofx.temLancamentos()).toBe(true)                    
+                    for (const lanc of ofx.ofxLancamentos) {
+                        expect(lanc.temConta()).toBe(true)
+                    }
                 } catch (e) {
                     throw e
                 }
@@ -66,6 +95,35 @@ describe('alt-conciliacao-bancaria', () => {
                     expect(ofx.dataInicial).toBeInstanceOf(Date)
                     expect(ofx.dataFinal).toBeInstanceOf(Date)
                     expect(ofx.conta).toBeUndefined()
+                    expect(ofx.temConta()).toBe(false)
+                    expect(ofx.temLancamentos()).toBe(true)
+                    for (const lanc of ofx.ofxLancamentos) {
+                        expect(lanc.temConta()).toBe(false)
+                    }
+                } catch (e) {
+                    throw e
+                }
+            })
+
+            it('deve resolver o conteúdo do arquivo retornando uma instância de Ofx - com opções', async () => {
+                const arquivo = {}
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_PEQUENO)
+                const opcoes = {conta: {id: 1, nome: 'conta1'}}
+
+                try {
+                    const ofx = await parseOfx(arquivo, fileReader, opcoes)
+                    expect(ofx).toBeDefined()
+                    expect(typeof ofx).toBe('object')
+                    expect(ofx.dadosBanco).toBeDefined()
+                    expect(ofx.ofxLancamentos.length).toBe(1)
+                    expect(ofx.dataInicial).toBeInstanceOf(Date)
+                    expect(ofx.dataFinal).toBeInstanceOf(Date)
+                    expect(ofx.conta).toBeDefined()
+                    expect(ofx.temConta()).toBe(true)
+                    expect(ofx.temLancamentos()).toBe(true)
+                    for (const lanc of ofx.ofxLancamentos) {
+                        expect(lanc.temConta()).toBe(true)
+                    }
                 } catch (e) {
                     throw e
                 }
@@ -98,6 +156,35 @@ describe('alt-conciliacao-bancaria', () => {
                     expect(ofx.dataInicial).toBeInstanceOf(Date)
                     expect(ofx.dataFinal).toBeInstanceOf(Date)
                     expect(ofx.conta).toBeUndefined()
+                    expect(ofx.temConta()).toBe(false)
+                    expect(ofx.temLancamentos()).toBe(true)
+                    for (const lanc of ofx.ofxLancamentos) {
+                        expect(lanc.temConta()).toBe(false)
+                    }
+                } catch (e) {
+                    throw e
+                }
+            })
+
+            it('deve resolver o conteúdo do arquivo retornando uma instância de Ofx - com opções', async () => {
+                const arquivo = {}
+                const fileReader = criaOfxFileReader(PATH_OFX_UTF8_DIFERENTES_VALORES)
+                const opcoes = {conta: {id: 1, nome: 'conta1'}}
+
+                try {
+                    const ofx = await parseOfx(arquivo, fileReader, opcoes)
+                    expect(ofx).toBeDefined()
+                    expect(typeof ofx).toBe('object')
+                    expect(ofx.dadosBanco).toBeDefined()
+                    expect(ofx.ofxLancamentos.length).toBe(97)
+                    expect(ofx.dataInicial).toBeInstanceOf(Date)
+                    expect(ofx.dataFinal).toBeInstanceOf(Date)
+                    expect(ofx.conta).toBeDefined()
+                    expect(ofx.temConta()).toBe(true)
+                    expect(ofx.temLancamentos()).toBe(true)
+                    for (const lanc of ofx.ofxLancamentos) {
+                        expect(lanc.temConta()).toBe(true)
+                    }
                 } catch (e) {
                     throw e
                 }
