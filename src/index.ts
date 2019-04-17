@@ -24,7 +24,7 @@ export function parseOfx(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpcoe
         opcoes = {}
     }
 
-    return leArquivoOfx(arquivoOfx, reader, opcoes) 
+    return file2ofxstr(arquivoOfx, reader, opcoes) 
         .then((ofxString) => {
             return new Ofx((ofxString as string), opcoes!.conta)
         })
@@ -35,13 +35,13 @@ export function ofxToJSON(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpco
         opcoes = {}
     }
 
-    return leArquivoOfx(arquivoOfx, reader, opcoes)
+    return file2ofxstr(arquivoOfx, reader, opcoes)
         .then((ofxString) => {
-            return Ofx.fromFileToJSON((ofxString as string))
+            return ofxstr2json(ofxString)
         })
 }
 
-function leArquivoOfx(arquivoOfx:File, reader:OfxFileReader, opcoes:OfxOpcoesToJSON = {}):Promise<any> {
+function file2ofxstr(arquivoOfx:File, reader:OfxFileReader, opcoes:OfxOpcoesToJSON = {}):Promise<any> {
     return new Promise((resolve, reject) => {
         if (!arquivoOfx) {
             return reject(new Error('Arquivo não informado.'))
@@ -57,7 +57,7 @@ function leArquivoOfx(arquivoOfx:File, reader:OfxFileReader, opcoes:OfxOpcoesToJ
                     // faz o parse do arquivo de forma diferente:
                     // utilizando windows-1252
                     if (target.result.charCodeAt(i) == CODIGO_CHAR_ANSI) {
-                        leArquivoOfx(arquivoOfx, reader, Object.assign(opcoes, {encode: ENCODE_WINDOW_1252}))
+                        file2ofxstr(arquivoOfx, reader, Object.assign(opcoes, {encode: ENCODE_WINDOW_1252}))
                     }
                 }
             }
@@ -74,7 +74,7 @@ function leArquivoOfx(arquivoOfx:File, reader:OfxFileReader, opcoes:OfxOpcoesToJ
     })
 }
 
-function ofxstr2Json(ofxStr:string):any {
+function ofxstr2json(ofxStr:string):any {
     if (!ofxStr || ofxStr.length === 0) {
         throw new Error("Arquivo vazio.")
     }
@@ -122,15 +122,11 @@ class Ofx {
         }
 
         if (typeof arquivoOfxString === "string") {
-            const arquivoCompletoJSON = this._parseXML2JSON(arquivoOfxString)
+            const arquivoCompletoJSON = this._parseXML2jSON(arquivoOfxString)
             this._preencheModeloComBaseNoArquivo(arquivoCompletoJSON)
         }
 
         this._preencheLancamentosComContaPassada()
-    }
-
-    static fromFileToJSON(arquivoOfxString:string):any {
-        return ofxstr2Json(arquivoOfxString)
     }
 
     temConta():boolean {
@@ -151,8 +147,8 @@ class Ofx {
         })
     }
 
-    private _parseXML2JSON(arquivoOfxString:string):void {
-        return ofxstr2Json(arquivoOfxString)
+    private _parseXML2jSON(arquivoOfxString:string):void {
+        return ofxstr2json(arquivoOfxString)
     }
 
     private _preencheModeloComBaseNoArquivo(arquivoCompletoJSON:any):void {

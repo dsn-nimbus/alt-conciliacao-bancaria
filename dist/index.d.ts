@@ -19,11 +19,10 @@ declare class Ofx {
     dataFinal: Date;
     conta: any;
     constructor(arquivoOfxString: string, conta: any, objOfx?: Partial<Ofx>);
-    static fromFileToJSON(arquivoOfxString: string): any;
     temConta(): boolean;
     temLancamentos(): boolean;
     private _preencheLancamentosComContaPassada;
-    private _parseXML2JSON;
+    private _parseXML2jSON;
     private _preencheModeloComBaseNoArquivo;
     private _parseData;
 }
