@@ -58,7 +58,7 @@ ofxToJSON(arquivo, new FileReader(), opcoes)
 ```shell
 $ npm i
 $ npm t
-$ npm build
+$ npm run build
 ```
 
 ### License
