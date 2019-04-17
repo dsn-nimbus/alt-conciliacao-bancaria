@@ -19,14 +19,32 @@ interface OfxOpcoesToJSON {
     encode?:encodeType
 }
 
-function ofxToJSONFn(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpcoesToJSON):Promise<any> {
+export function parseOfx(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpcoesParse):Promise<Ofx> {
+    if (!opcoes) {
+        opcoes = {}
+    }
+
+    return leArquivoOfx(arquivoOfx, reader, opcoes) 
+        .then((ofxString) => {
+            return new Ofx((ofxString as string), opcoes!.conta)
+        })
+}
+
+export function ofxToJSON(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpcoesToJSON):Promise<any> {
+    if (!opcoes) {
+        opcoes = {}
+    }
+
+    return leArquivoOfx(arquivoOfx, reader, opcoes)
+        .then((ofxString) => {
+            return Ofx.fromFileToJSON((ofxString as string))
+        })
+}
+
+function leArquivoOfx(arquivoOfx:File, reader:OfxFileReader, opcoes:OfxOpcoesToJSON = {}):Promise<any> {
     return new Promise((resolve, reject) => {
         if (!arquivoOfx) {
             return reject(new Error('Arquivo não informado.'))
-        }
-
-        if (!opcoes) {
-            opcoes = {}
         }
 
         reader.onload = function(event:Event) {
@@ -39,7 +57,7 @@ function ofxToJSONFn(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpcoesToJ
                     // faz o parse do arquivo de forma diferente:
                     // utilizando windows-1252
                     if (target.result.charCodeAt(i) == CODIGO_CHAR_ANSI) {
-                        ofxToJSON(arquivoOfx, reader, Object.assign(opcoes, {encode: ENCODE_WINDOW_1252}))
+                        leArquivoOfx(arquivoOfx, reader, Object.assign(opcoes, {encode: ENCODE_WINDOW_1252}))
                     }
                 }
             }
@@ -53,49 +71,6 @@ function ofxToJSONFn(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpcoesToJ
 
         reader.readAsText(arquivoOfx, opcoes!.encode)
         opcoes.encode = undefined
-    })
-    .then((ofxString) => {
-        return Ofx.fromFileToJSON((ofxString as string))
-    })
-}
-
-function parseOfxFn(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpcoesParse):Promise<Ofx> {
-    return new Promise((resolve, reject) => {
-        if (!arquivoOfx) {
-            return reject(new Error('Arquivo não informado.'))
-        }
-
-        if (!opcoes) {
-            opcoes = {}
-        }
-
-        reader.onload = function(event:Event) {
-            let target:any = event.target // TS hack
-
-            // Charsets suportados: UTF-8 e ANSI
-            if (opcoes!.encode === undefined) {
-                for (var i in target.result) {
-                    // Caso o código seja este, 
-                    // faz o parse do arquivo de forma diferente:
-                    // utilizando windows-1252
-                    if (target.result.charCodeAt(i) == CODIGO_CHAR_ANSI) {
-                        parseOfx(arquivoOfx, reader, Object.assign(opcoes, {encode: ENCODE_WINDOW_1252}))
-                    }
-                }
-            }
-            
-            try {
-                return resolve(target.result)
-            } catch (e) {
-                return reject(e)
-            }
-        }
-
-        reader.readAsText(arquivoOfx, opcoes!.encode)
-        opcoes.encode = undefined
-    })
-    .then((ofxString) => {
-        return new Ofx((ofxString as string), opcoes!.conta)
     })
 }
 
@@ -270,6 +245,3 @@ class OfxLancamento {
         this.checknum = this.checknum || this.refnum
     }
 }
-
-export const parseOfx = parseOfxFn
-export const ofxToJSON = ofxToJSONFn
