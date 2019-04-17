@@ -1,5 +1,7 @@
 # alt-conciliacao-bancaria
 
+[![Build Status](https://travis-ci.org/dsn-nimbus/alt-conciliacao-bancaria.svg?branch=master)](https://travis-ci.org/dsn-nimbus/alt-conciliacao-bancaria)
+
 ### Install
 
 ```shell
