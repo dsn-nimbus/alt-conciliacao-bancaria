@@ -53,6 +53,14 @@ ofxToJSON(arquivo, new FileReader(), opcoes)
     })
 ```
 
+### Desenvolvimento
+
+```shell
+$ npm i
+$ npm t
+$ npm build
+```
+
 ### License
 
 MIT
