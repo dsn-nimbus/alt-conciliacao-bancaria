@@ -59,7 +59,6 @@ describe('alt-conciliacao-bancaria', () => {
 
                 try {
                     const ofxJSON = await ofxToJSON(arquivo, fileReader)
-                    console.log(ofxJSON)
                     expect(ofxJSON).toBeDefined()
                     expect(typeof ofxJSON).toBe('object')
                     expect(ofxJSON.signonmsgsrsv1).toBeDefined()

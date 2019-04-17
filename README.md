@@ -6,7 +6,7 @@
 $ npm i --save alt-conciliacao-bancaria
 ```
 
-### parseOfx(arquivo:File, reader:OfxFileReader, opcoes?:OpcoesParseOfx):Promise<Ofx>
+### parseOfx(arquivo:File, reader:OfxFileReader, opcoes?:OfxOpcoesParse):Promise<Ofx>
 
 #### Uso simples
 
@@ -47,7 +47,7 @@ parseOfx(this.files[0], new FileReader(), opcoesParse)
     })
 ```
 
-### ofxToJSON(arquivo:File, reader:OfxFileReader, opcoes?:OpcoesOfxToJSON):Promise<any>
+### ofxToJSON(arquivo:File, reader:OfxFileReader, opcoes?:OfxOpcoesToJSON):Promise<any>
 
 #### Uso simples
 

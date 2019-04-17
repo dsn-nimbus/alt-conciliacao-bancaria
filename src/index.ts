@@ -10,16 +10,16 @@ interface OfxFileReader {
     readAsText(arquivo:File, encode:encodeType):void
 }
 
-interface OpcoesParseOfx {
+interface OfxOpcoesParse {
     conta?:any
     encode?:encodeType
 }
 
-interface OpcoesOfxToJSON {
+interface OfxOpcoesToJSON {
     encode?:encodeType
 }
 
-export function parseOfx(arquivoOfx:File, reader:OfxFileReader, opcoes?:OpcoesParseOfx):Promise<Ofx> {
+function parseOfxFn(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpcoesParse):Promise<Ofx> {
     return new Promise((resolve, reject) => {
         if (!arquivoOfx) {
             return reject('Arquivo não informado.')
@@ -59,7 +59,7 @@ export function parseOfx(arquivoOfx:File, reader:OfxFileReader, opcoes?:OpcoesPa
     })
 }
 
-export function ofxToJSON(arquivoOfx:File, reader:OfxFileReader, opcoes?:OpcoesOfxToJSON):Promise<any> {
+function ofxToJSONFn(arquivoOfx:File, reader:OfxFileReader, opcoes?:OfxOpcoesToJSON):Promise<any> {
     return new Promise((resolve, reject) => {
         if (!arquivoOfx) {
             return reject('Arquivo não informado.')
@@ -270,3 +270,6 @@ class OfxLancamento {
         this.checknum = this.checknum || this.refnum
     }
 }
+
+export const parseOfx = parseOfxFn
+export const ofxToJSON = ofxToJSONFn
