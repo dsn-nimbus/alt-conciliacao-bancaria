@@ -16,7 +16,7 @@ $ npm i --save alt-conciliacao-bancaria
 import {parseOfx} from 'alt-conciliacao-bancaria'
 
 // parseOfx(arquivo:File, reader:OfxFileReader, opcoes?:OfxOpcoesParse):Promise<Ofx>
-parseOfx(this.files[0], new FileReader())
+parseOfx(arquivo, new FileReader())
     .then((ofx:Ofx) => {
 
     })
@@ -26,7 +26,7 @@ const opcoesParse = {
     encode: 'windows-1252', // Default é UTF-8
 }
 
-parseOfx(this.files[0], new FileReader(), opcoesParse)
+parseOfx(arquivo, new FileReader(), opcoesParse)
     .then((ofx:Ofx) => {
 
     })
@@ -38,7 +38,7 @@ parseOfx(this.files[0], new FileReader(), opcoesParse)
 import {ofxToJSON} from 'alt-conciliacao-bancaria'
 
 // ofxToJSON(arquivo:File, reader:OfxFileReader, opcoes?:OfxOpcoesToJSON):Promise<any>
-ofxToJSON(this.files[0], new FileReader())
+ofxToJSON(arquivo, new FileReader())
     .then((ofxJson:any) => {
 
     })
@@ -47,7 +47,7 @@ const opcoes = {
     encode: 'windows-1252', // Default é UTF-8
 }
 
-ofxToJSON(this.files[0], new FileReader(), opcoes)
+ofxToJSON(arquivo, new FileReader(), opcoes)
     .then((ofxJson:any) => {
 
     })
