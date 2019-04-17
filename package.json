@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npm t && tsc && uglifyjs dist/index.js --compress --output dist/index.js",
-    "test": "mocha ./test/*_test.js --reporter min --require ts-node/register src/*.ts"
+    "test": "mocha ./test/*_test.js --reporter dot --require ts-node/register src/*.ts --timeout 10000"
   },
   "repository": {
     "type": "git",

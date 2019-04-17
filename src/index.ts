@@ -182,31 +182,31 @@ class Ofx {
 
     private _preencheModeloComBaseNoArquivo(arquivoCompletoJSON:any):void {
         try {
-            if (!arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn) {
+            if (!arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn) {
                 throw new Error("Arquivo inválido.")
             }
 
-            let dataIni = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.dtstart
-            let dataFim = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.dtend
+            let dataIni = arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.dtstart
+            let dataFim = arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.dtend
             let lancamentos = []
 
             this._parseData('dataInicial', dataIni)
             this._parseData('dataFinal', dataFim)
 
-            if (Array.isArray(arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn)) {
-                arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.forEach((ln:any) => {
+            if (Array.isArray(arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn)) {
+                arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.forEach((ln:any) => {
                     const ofxLancamento = new OfxLancamento(ln)
-                    ofxLancamento.bankid = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.bankacctfrom.bankid
+                    ofxLancamento.bankid = arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.bankacctfrom.bankid
                     lancamentos.push(ofxLancamento)
                 })
             } else {
-                arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.conta = this.conta
-                arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.bankid = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.bankacctfrom.bankid
-                lancamentos.push(new OfxLancamento(arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn))
+                arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.conta = this.conta
+                arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn.bankid = arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.bankacctfrom.bankid
+                lancamentos.push(new OfxLancamento(arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.banktranlist.stmttrn))
             }
 
             this.ofxLancamentos = lancamentos
-            this.dadosBanco = arquivoCompletoJSON.ofx.bankmsgsrsv1.stmttrnrs.stmtrs.bankacctfrom
+            this.dadosBanco = arquivoCompletoJSON.bankmsgsrsv1.stmttrnrs.stmtrs.bankacctfrom
         } catch (e) {
             throw new Error("O arquivo não possui uma estrutura OFX válida. Mensagem original: " + e.message)
         }
